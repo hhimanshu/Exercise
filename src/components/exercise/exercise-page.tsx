@@ -28,7 +28,7 @@ export default () => {
       <Grid container>
         <Grid item xs={12}>
           {communications.length > 0
-            ? communications.map(comm => <Communication {...comm} />)
+            ? communications.map(comm => <Communication comm={comm} />)
             : "No communications found."}
         </Grid>
       </Grid>
