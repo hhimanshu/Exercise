@@ -22,4 +22,5 @@ export interface ICommunication {
   created: number;
   updated: number;
   reminded: number;
+  summary: string;
 }

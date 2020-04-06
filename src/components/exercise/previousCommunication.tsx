@@ -3,7 +3,7 @@ import { ExpandMore } from "@material-ui/icons";
 import { format, formatDistanceToNow } from "date-fns";
 import React, { ChangeEvent, useState } from 'react';
 import { ICommHistory } from "../../types/communication";
-import { DisplayEmail, DisplayPhones, DisplaySlackChannels, DisplayTags } from './shared';
+import { DisplayEmails, DisplayPhones, DisplaySlackChannels, DisplayTags } from './shared';
 
 export const PreviousCommunications = (props: { threads: ICommHistory[] }) => {
     const [selectedThread, setSelectedThread] = useState<string | false>(false)
@@ -81,7 +81,7 @@ const ThreadSummary = (props: {
                 <HeadingChildren title="Tags"><DisplayTags tags={props.tags} /></HeadingChildren>
             </Grid>
             <Grid item xs={12}>
-                <HeadingChildren title="Emails"><DisplayEmail emails={props.emails} /></HeadingChildren>
+                <HeadingChildren title="Emails"><DisplayEmails emails={props.emails} /></HeadingChildren>
             </Grid>
             <Grid item xs={12}>
                 <HeadingChildren title="Phone Numbers"><DisplayPhones phones={props.phones} /></HeadingChildren>
