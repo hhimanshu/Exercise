@@ -18,8 +18,10 @@ export const PreviousCommunications = (props: { threads: ICommHistory[] }) => {
     })
 
     return <>
-        <Typography variant="h5" gutterBottom>Previous Communications</Typography>
         <Grid container justify="center" spacing={1}>
+            <Grid item xs={10}>
+                <Typography variant="h5" align="center" gutterBottom>Previous Communications</Typography>
+            </Grid>
             {threadsByLatest.map((thread, index) => {
                 return <Grid item xs={10} >
                     <ExpansionPanel expanded={selectedThread === `${index}`} onChange={onThreadClick(`${index}`)}>
@@ -76,16 +78,16 @@ const ThreadSummary = (props: {
                 </HeadingChildren>
             </Grid>
             <Grid item xs={12}>
-                <HeadingChildren title="Tags"><DisplayTags tags={props.tags}/></HeadingChildren>
+                <HeadingChildren title="Tags"><DisplayTags tags={props.tags} /></HeadingChildren>
             </Grid>
             <Grid item xs={12}>
-                <HeadingChildren title="Emails"><DisplayEmail emails={props.emails}/></HeadingChildren>
+                <HeadingChildren title="Emails"><DisplayEmail emails={props.emails} /></HeadingChildren>
             </Grid>
             <Grid item xs={12}>
                 <HeadingChildren title="Phone Numbers"><DisplayPhones phones={props.phones} /></HeadingChildren>
             </Grid>
             <Grid item xs={12}>
-                <HeadingChildren title="Slack Channels"><DisplaySlackChannels channels={props.slackChannels}/></HeadingChildren>
+                <HeadingChildren title="Slack Channels"><DisplaySlackChannels channels={props.slackChannels} /></HeadingChildren>
             </Grid>
         </Grid>
     </>
