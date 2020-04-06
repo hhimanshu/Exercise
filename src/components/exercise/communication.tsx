@@ -2,7 +2,7 @@ import React, { FunctionComponent, useState, ChangeEvent } from 'react';
 import { ICommunication, ICommHistory } from "../../types/communication";
 import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography, Grid } from "@material-ui/core"
 import { ExpandMore } from "@material-ui/icons"
-import { format } from "date-fns"
+import { formatDistanceToNow } from "date-fns"
 
 export const Communication: FunctionComponent<{ comm: ICommunication }> = (props) => (
     <div key={props.comm._id}>
@@ -41,14 +41,12 @@ const PreviousCommunications = (props: { threads: ICommHistory[] }) => {
                             </Grid>
                             <Grid container>
                                 <Grid item>
-                                    <Typography variant="caption" color="textSecondary">{format(thread.created.$date, "'published on' iiii")}</Typography>
+                                    <Typography variant="caption" color="textSecondary">{formatDistanceToNow(thread.created.$date, { addSuffix: true, includeSeconds: true })}</Typography>
                                 </Grid>
                             </Grid>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Typography>
-                                Coming Soon to your doors!
-               </Typography>
+                            <Typography>Coming Soon to your doors!</Typography>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                 </Grid>
