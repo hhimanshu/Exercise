@@ -40,7 +40,7 @@ export const PreviousCommunications = (props: { threads: ICommHistory[] }) => {
             }
             {showThreads && <>
                 {threadsByLatest.map((thread, index) => {
-                    return <Grid item xs={10} >
+                    return <Grid item xs={10} key={index}>
                         <ExpansionPanel expanded={selectedThread === `${index}`} onChange={onThreadClick(`${index}`)}>
                             <ExpansionPanelSummary
                                 expandIcon={<ExpandMore />}

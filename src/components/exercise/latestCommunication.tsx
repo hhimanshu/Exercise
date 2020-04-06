@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { ICommunication } from "../../types/communication"
 import { format } from "date-fns"
-import { Grid, makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@material-ui/core"
+import { Grid, makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip } from "@material-ui/core"
 import { DisplayTags, DisplayEmails, DisplayPhones, DisplaySlackChannels, Header } from './shared';
+import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -18,7 +19,19 @@ export const LatestCommunication: FunctionComponent<{ comm: ICommunication }> = 
     const classes = useStyles()
 
     return <Grid container justify="center" className={classes.root}>
-        <Grid item xs={10}><Header title="Latest Communication"/></Grid>
+        <Grid item xs={10}>
+            <Header title="Latest Communication">
+                <Chip
+                    label="Edit Communication"
+                    clickable
+                    color="primary"
+                    onDelete={()=> console.log("Edit")}
+                    deleteIcon={<EditIcon />}
+                    variant="outlined"
+                />
+            </Header>
+
+        </Grid>
         <Grid item xs={10}>
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="latest communication">
@@ -39,19 +52,19 @@ export const LatestCommunication: FunctionComponent<{ comm: ICommunication }> = 
                         </TableRow>
                         <TableRow key={"tags"}>
                             <TableCell component="th" scope="row">Tags</TableCell>
-                            <TableCell><DisplayTags tags={props.comm.tags}/></TableCell>
+                            <TableCell><DisplayTags tags={props.comm.tags} /></TableCell>
                         </TableRow>
                         <TableRow key={"emails"}>
                             <TableCell component="th" scope="row">Emails</TableCell>
-                            <TableCell><DisplayEmails emails={props.comm.emails}/></TableCell>
+                            <TableCell><DisplayEmails emails={props.comm.emails} /></TableCell>
                         </TableRow>
                         <TableRow key={"phones"}>
                             <TableCell component="th" scope="row">Phone Numbers</TableCell>
-                            <TableCell><DisplayPhones phones={props.comm.phones}/></TableCell>
+                            <TableCell><DisplayPhones phones={props.comm.phones} /></TableCell>
                         </TableRow>
                         <TableRow key={"channels"}>
                             <TableCell component="th" scope="row">Slack Channels</TableCell>
-                            <TableCell><DisplaySlackChannels channels={props.comm.slack_channels}/></TableCell>
+                            <TableCell><DisplaySlackChannels channels={props.comm.slack_channels} /></TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

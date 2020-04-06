@@ -22,10 +22,10 @@ const ShowChips = (props: { items: string[] }) => {
 }
 
 export const Header = (props: { title: string, children?: any }) => (
-    <Grid container>
-        <Grid item xs={10}>
+    <Grid container justify="space-around">
+        <Grid item xs={7} md={6}>
             <Typography variant="h5" align="center" gutterBottom>{props.title}</Typography>
         </Grid>
-        <Grid item>{props.children}</Grid>
+        <Grid item xs={3}>{props.children}</Grid>
     </Grid>
 )
