@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { ICommunication } from "../../types/communication"
 import { format } from "date-fns"
-import { Grid, Typography, makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@material-ui/core"
-import { DisplayTags, DisplayEmails, DisplayPhones, DisplaySlackChannels } from './shared';
+import { Grid, makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@material-ui/core"
+import { DisplayTags, DisplayEmails, DisplayPhones, DisplaySlackChannels, Header } from './shared';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -18,9 +18,7 @@ export const LatestCommunication: FunctionComponent<{ comm: ICommunication }> = 
     const classes = useStyles()
 
     return <Grid container justify="center" className={classes.root}>
-        <Grid item xs={10}>
-            <Typography variant="h5" align="center" gutterBottom>Latest Communication</Typography>
-        </Grid>
+        <Grid item xs={10}><Header title="Latest Communication"/></Grid>
         <Grid item xs={10}>
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="latest communication">

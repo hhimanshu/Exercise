@@ -1,12 +1,13 @@
-import { Divider, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Divider, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Grid, makeStyles, Typography, FormControlLabel, Switch } from "@material-ui/core";
 import { ExpandMore } from "@material-ui/icons";
 import { format, formatDistanceToNow } from "date-fns";
 import React, { ChangeEvent, useState } from 'react';
 import { ICommHistory } from "../../types/communication";
-import { DisplayEmails, DisplayPhones, DisplaySlackChannels, DisplayTags } from './shared';
+import { DisplayEmails, DisplayPhones, DisplaySlackChannels, DisplayTags, Header } from './shared';
 
 export const PreviousCommunications = (props: { threads: ICommHistory[] }) => {
     const [selectedThread, setSelectedThread] = useState<string | false>(false)
+    const [showThreads, setShowThreads] = useState<boolean | true>(true)
     const onThreadClick = (thread: string) => (e: ChangeEvent<{}>, isExpanded: boolean) => {
         setSelectedThread(isExpanded ? thread : false)
     }
@@ -17,42 +18,60 @@ export const PreviousCommunications = (props: { threads: ICommHistory[] }) => {
         return t2.created.$date - t1.created.$date
     })
 
+    const toggleHideThreads = () => setShowThreads(!showThreads)
+
     return <>
         <Grid container justify="center" spacing={1}>
             <Grid item xs={10}>
-                <Typography variant="h5" align="center" gutterBottom>Previous Communications</Typography>
+                <Header title="Previous Communications">
+                    <FormControlLabel
+                        value="start"
+                        control={<Switch color="primary" />}
+                        label="Hide Threads"
+                        onClick={toggleHideThreads}
+                        labelPlacement="start"
+                    />
+                </Header>
             </Grid>
-            {threadsByLatest.map((thread, index) => {
-                return <Grid item xs={10} >
-                    <ExpansionPanel expanded={selectedThread === `${index}`} onChange={onThreadClick(`${index}`)}>
-                        <ExpansionPanelSummary
-                            expandIcon={<ExpandMore />}
-                            aria-controls={`${index}-summary`}
-                            id={`${index}-header`}
-                        >
-                            <Grid container justify="center">
-                                <Grid item>
-                                    <Typography variant="subtitle1">{thread.summary}</Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container>
-                                <Grid item>
-                                    <Typography variant="caption" color="textSecondary">{formatDistanceToNow(thread.created.$date, { addSuffix: true, includeSeconds: true })}</Typography>
-                                </Grid>
-                            </Grid>
-                        </ExpansionPanelSummary>
-                        <ExpansionPanelDetails>
-                            <ThreadSummary publishDate={thread.created.$date}
-                                summary={thread.summary}
-                                tags={thread.tags}
-                                emails={thread.emails}
-                                phones={thread.phones}
-                                slackChannels={thread.slack_channels}
-                            />
-                        </ExpansionPanelDetails>
-                    </ExpansionPanel>
+            {!showThreads &&
+                <Grid item xs={10}>
+                    <Typography align="center" variant="subtitle1">You have chosen to hide the messages</Typography>
                 </Grid>
-            })}
+            }
+            {showThreads && <>
+                {threadsByLatest.map((thread, index) => {
+                    return <Grid item xs={10} >
+                        <ExpansionPanel expanded={selectedThread === `${index}`} onChange={onThreadClick(`${index}`)}>
+                            <ExpansionPanelSummary
+                                expandIcon={<ExpandMore />}
+                                aria-controls={`${index}-summary`}
+                                id={`${index}-header`}
+                            >
+                                <Grid container justify="center">
+                                    <Grid item>
+                                        <Typography variant="subtitle1">{thread.summary}</Typography>
+                                    </Grid>
+                                </Grid>
+                                <Grid container>
+                                    <Grid item>
+                                        <Typography variant="caption" color="textSecondary">{formatDistanceToNow(thread.created.$date, { addSuffix: true, includeSeconds: true })}</Typography>
+                                    </Grid>
+                                </Grid>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                <ThreadSummary publishDate={thread.created.$date}
+                                    summary={thread.summary}
+                                    tags={thread.tags}
+                                    emails={thread.emails}
+                                    phones={thread.phones}
+                                    slackChannels={thread.slack_channels}
+                                />
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+                    </Grid>
+                })}
+            </>
+            }
         </Grid>
     </>
 }
