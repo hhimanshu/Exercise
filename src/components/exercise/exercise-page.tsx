@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCommunications } from "../../actions/commsLeadActions";
 import { Grid } from "@material-ui/core";
 import { RootState } from "../../store";
+import { Communication } from "./communication";
 
 export default () => {
   const communications = useSelector(
@@ -27,12 +28,7 @@ export default () => {
       <Grid container>
         <Grid item xs={12}>
           {communications.length > 0
-            ? communications.map(comm => (
-                <div key={comm._id}>
-                  <h2>Communications:</h2>
-                  <pre>{JSON.stringify(comm, null, 4)}</pre>
-                </div>
-              ))
+            ? communications.map(comm => <Communication {...comm} />)
             : "No communications found."}
         </Grid>
       </Grid>
