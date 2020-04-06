@@ -25,8 +25,8 @@ export const LatestCommunication: FunctionComponent<{ comm: ICommunication }> = 
                     label="Edit Communication"
                     clickable
                     color="primary"
-                    onDelete={()=> console.log("Edit")}
-                    deleteIcon={<EditIcon />}
+                    onClick={() => console.log("edit clicked")}
+                    icon={<EditIcon fontSize="small" />}
                     variant="outlined"
                 />
             </Header>
