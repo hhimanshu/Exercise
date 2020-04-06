@@ -1,8 +1,9 @@
-import React, { FunctionComponent, useState, ChangeEvent } from 'react';
-import { ICommunication, ICommHistory } from "../../types/communication";
-import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Typography, Grid, Divider, makeStyles, Chip } from "@material-ui/core"
-import { ExpandMore } from "@material-ui/icons"
-import { format, formatDistanceToNow } from "date-fns"
+import { Divider, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Grid, makeStyles, Typography } from "@material-ui/core";
+import { ExpandMore } from "@material-ui/icons";
+import { format, formatDistanceToNow } from "date-fns";
+import React, { ChangeEvent, FunctionComponent, useState } from 'react';
+import { ICommHistory, ICommunication } from "../../types/communication";
+import { DisplayEmail, DisplayPhones, DisplaySlackChannels, DisplayTags } from './shared';
 
 export const Communication: FunctionComponent<{ comm: ICommunication }> = (props) => (
     <div key={props.comm._id}>
@@ -61,12 +62,6 @@ const PreviousCommunications = (props: { threads: ICommHistory[] }) => {
     </>
 }
 
-const useThreadStyles = makeStyles(theme => ({
-    chips: {
-        marginRight: theme.spacing(1),
-    }
-}))
-
 const ThreadSummary = (props: {
     publishDate: number,
     summary: string,
@@ -75,7 +70,6 @@ const ThreadSummary = (props: {
     phones: string[],
     slackChannels: string[]
 }) => {
-    const classes = useThreadStyles()
     return <>
         <Grid container>
             <Grid item xs={12}>
@@ -89,24 +83,16 @@ const ThreadSummary = (props: {
                 </HeadingChildren>
             </Grid>
             <Grid item xs={12}>
-                <HeadingChildren title="Tags">
-                    {props.tags.map((tag, index) => <Chip className={classes.chips} key={index} label={tag} variant="outlined" />)}
-                </HeadingChildren>
+                <HeadingChildren title="Tags"><DisplayTags tags={props.tags}/></HeadingChildren>
             </Grid>
             <Grid item xs={12}>
-                <HeadingChildren title="Emails">
-                    {props.emails.map((email, index) => <Chip className={classes.chips} key={index} label={email} variant="outlined" />)}
-                </HeadingChildren>
+                <HeadingChildren title="Emails"><DisplayEmail emails={props.emails}/></HeadingChildren>
             </Grid>
             <Grid item xs={12}>
-                <HeadingChildren title="Phone Numbers">
-                    {props.phones.map((phone, index) => <Chip className={classes.chips} key={index} label={phone} variant="outlined" />)}
-                </HeadingChildren>
+                <HeadingChildren title="Phone Numbers"><DisplayPhones phones={props.phones} /></HeadingChildren>
             </Grid>
             <Grid item xs={12}>
-                <HeadingChildren title="Slack Channels">
-                    {props.slackChannels.map((channel, index) => <Chip className={classes.chips} key={index} label={channel} variant="outlined" />)}
-                </HeadingChildren>
+                <HeadingChildren title="Slack Channels"><DisplaySlackChannels channels={props.slackChannels}/></HeadingChildren>
             </Grid>
         </Grid>
     </>
