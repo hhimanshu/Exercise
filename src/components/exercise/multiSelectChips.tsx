@@ -1,9 +1,4 @@
-import { Chip } from "@material-ui/core";
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import { Chip, FormControl, Input, InputLabel, MenuItem, Select } from "@material-ui/core";
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import React from 'react';
 
