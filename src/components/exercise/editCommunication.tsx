@@ -62,6 +62,11 @@ export const EditCommunication = (props: { onClose: any, onSave: any, currentCom
         setDraftComm(updatedComm)
     }
 
+    const handleMultiChange = (e: React.ChangeEvent<{ name: string, value: unknown }>) => {
+        const updatedComm = Object.assign({}, draftComm, { [e.target.name]: e.target.value as string[] })
+        setDraftComm(updatedComm)
+    };
+
     /* For logging purposes */
     useEffect(() => {
         console.log(JSON.stringify(draftComm, null, 4))
@@ -75,7 +80,7 @@ export const EditCommunication = (props: { onClose: any, onSave: any, currentCom
         </DialogTitle>
                 <DialogContent dividers>
                     <TextField name="summary" label="Summary" defaultValue={draftComm.summary} onChange={onSummaryChange} />
-                    <MultipleSelect/>
+                    <MultipleSelect name="tags" selectedValues={draftComm.tags} allValues={props.currentComm.tags} onChange={handleMultiChange} />
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={props.onClose} color="primary">Cancel</Button>

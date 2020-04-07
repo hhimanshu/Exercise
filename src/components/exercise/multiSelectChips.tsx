@@ -1,9 +1,9 @@
-import Chip from '@material-ui/core/Chip';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import { Chip } from "@material-ui/core";
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import React from 'react';
 
@@ -38,47 +38,46 @@ const MenuProps = {
     },
 };
 
-const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-];
+// const names = [
+//     'Oliver Hansen',
+//     'Van Henry',
+//     'April Tucker',
+//     'Ralph Hubbard',
+//     'Omar Alexander',
+//     'Carlos Abbott',
+//     'Miriam Wagner',
+//     'Bradley Wilkerson',
+//     'Virginia Andrews',
+//     'Kelly Snyder',
+// ];
 
-function getStyles(name: string, personName: string[], theme: Theme) {
+function getStyles(name: string, values: string[], theme: Theme) {
     return {
         fontWeight:
-            personName.indexOf(name) === -1
+            values.indexOf(name) === -1
                 ? theme.typography.fontWeightRegular
                 : theme.typography.fontWeightMedium,
     };
 }
 
-export default function MultipleSelect() {
+export default function MultipleSelect(props: { name: string, selectedValues: string[], allValues: string[], onChange: any }) {
     const classes = useStyles();
+    //const [personName, setPersonName] = React.useState<string[]>(props.values);
+
+    // const onChange = () => setPersonName(props.values)
+    // const onChange = () => console.log("hello")
+    const label = props.name.charAt(0).toUpperCase() + props.name.slice(1)
+
     const theme = useTheme();
-    const [personName, setPersonName] = React.useState<string[]>([]);
-
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setPersonName(event.target.value as string[]);
-    };
-
     return (
         <div>
             <FormControl className={classes.formControl}>
-                <InputLabel>Chip</InputLabel>
+                <InputLabel>{label}</InputLabel>
                 <Select
-                    labelId="demo-mutiple-chip-label"
-                    id="demo-mutiple-chip"
                     multiple
-                    value={personName}
-                    onChange={handleChange}
+                    name={props.name}
+                    value={props.selectedValues}
+                    onChange={props.onChange}
                     input={<Input id="select-multiple-chip" />}
                     renderValue={(selected) => (
                         <div className={classes.chips}>
@@ -89,8 +88,8 @@ export default function MultipleSelect() {
                     )}
                     MenuProps={MenuProps}
                 >
-                    {names.map((name) => (
-                        <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
+                    {props.allValues.map((name) => (
+                        <MenuItem key={name} value={name} style={getStyles(name, props.selectedValues, theme)}>
                             {name}
                         </MenuItem>
                     ))}
