@@ -1,14 +1,10 @@
-import React from 'react';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
+import { Button, createStyles, Dialog, IconButton, TextField, Theme, Typography, withStyles, WithStyles } from '@material-ui/core';
 import MuiDialogActions from '@material-ui/core/DialogActions';
-import IconButton from '@material-ui/core/IconButton';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
-import { ICommunication } from "../../types/communication"
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ICommunication } from "../../types/communication";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -57,18 +53,27 @@ const DialogActions = withStyles((theme: Theme) => ({
     },
 }))(MuiDialogActions);
 
-export const EditCommunication = (props: { onClose: any, onSave: any, currentComm: ICommunication | {} }) => {
-    const draftComm = Object.assign({}, props.currentComm);
+export const EditCommunication = (props: { onClose: any, onSave: any, currentComm: ICommunication }) => {
+    const [draftComm, setDraftComm] = useState<ICommunication>(props.currentComm);
     const onSaveClick = () => props.onSave(draftComm)
+    const onSummaryChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const updatedComm = Object.assign({}, draftComm, { [e.target.name]: e.target.value })
+        setDraftComm(updatedComm)
+    }
+
+    /* For logging purposes */
+    useEffect(() => {
+        console.log(JSON.stringify(draftComm, null, 4))
+    }, [draftComm])
 
     return (
         <div>
             <Dialog onClose={props.onClose} aria-labelledby="customized-dialog-title" open>
                 <DialogTitle id="customized-dialog-title" onClose={props.onClose}>
-                    Editing Comm
+                    Editing Communication
         </DialogTitle>
                 <DialogContent dividers>
-                    <pre>{JSON.stringify(draftComm, null, 4)}</pre>
+                    <TextField name="summary" label="Summary" defaultValue={draftComm.summary} onChange={onSummaryChange} />
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={props.onClose} color="primary">Cancel</Button>

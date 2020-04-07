@@ -18,11 +18,14 @@ const useStyles = makeStyles(theme => ({
 
 export const LatestCommunication: FunctionComponent<{ comm: ICommunication }> = (props) => {
     const classes = useStyles()
-    const [currentComm, setCurrentComm] = useState<ICommunication | {}>({})
+    const [currentComm, setCurrentComm] = useState<ICommunication>(props.comm)
     const [isEditOn, setIsEditOn] = useState<boolean | false>(false)
 
     const toggleEditClick = () => setIsEditOn(!isEditOn)
-    const onSave = (draftComm: ICommunication) => console.log(draftComm)
+    const onSave = (draftComm: ICommunication) => {
+        console.log(draftComm)
+        toggleEditClick()
+    }
 
     useEffect(() => {
         if (isEditOn) {
