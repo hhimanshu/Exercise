@@ -1,10 +1,11 @@
-import { LoadStatus } from "../constants/loadStatus";
-import { getCommunications } from "../actions/commsLeadActions";
 import { createReducer } from "@reduxjs/toolkit";
+import { getCommunications } from "../actions/commsLeadActions";
+import { LoadStatus } from "../constants/loadStatus";
+import { EDIT_COMMUNICATION } from "../constants/commsLeadConstants"
 import { ICommunication } from "../types/communication";
 
 interface IDefaultState {
-  communications: ICommunication[];
+communications: ICommunication[];
   commsLeadLoadStatus: string;
 }
 
@@ -23,5 +24,9 @@ export default createReducer<IDefaultState>(initialState, {
   [getCommunications.ok.getType()]: (state, action) => {
     state.commsLeadLoadStatus = LoadStatus.OK;
     state.communications = action.payload.response.communications;
+  },
+  [EDIT_COMMUNICATION]: (state, action) => {
+    console.log("reducer got edited communication", action.payload)
+    state.communications = [action.payload];
   }
 });

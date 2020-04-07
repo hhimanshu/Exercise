@@ -1,1 +1,2 @@
 export const GET_COMMS = "GET_COMMS";
+export const EDIT_COMMUNICATION = "EDIT_COMMUNICATION"

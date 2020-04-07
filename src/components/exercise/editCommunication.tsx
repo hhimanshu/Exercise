@@ -3,7 +3,7 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { ICommunication } from "../../types/communication";
 import MultipleSelect from './multiSelectChips';
 
@@ -66,11 +66,6 @@ export const EditCommunication = (props: { onClose: any, onSave: any, currentCom
         const updatedComm = Object.assign({}, draftComm, { [e.target.name]: e.target.value as string[] })
         setDraftComm(updatedComm)
     };
-
-    /* For logging purposes */
-    useEffect(() => {
-        console.log(JSON.stringify(draftComm, null, 4))
-    }, [draftComm])
 
     return (
         <Dialog fullWidth disableBackdropClick maxWidth='xs' onClose={props.onClose} aria-labelledby="edit-communication-title" open>

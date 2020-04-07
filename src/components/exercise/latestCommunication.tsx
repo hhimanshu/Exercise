@@ -2,8 +2,10 @@ import { Chip, Grid, makeStyles, Paper, Table, TableBody, TableCell, TableContai
 import EditIcon from '@material-ui/icons/Edit';
 import { format } from "date-fns";
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import { ICommunication } from "../../types/communication";
+import { useDispatch } from "react-redux";
+import { ICommunication, ICommHistory } from "../../types/communication";
 import { EditCommunication } from './editCommunication';
+import { editCommunication } from "../../actions/commsLeadActions";
 import { DisplayEmails, DisplayPhones, DisplaySlackChannels, DisplayTags, Header } from './shared';
 
 const useStyles = makeStyles(theme => ({
@@ -19,11 +21,34 @@ const useStyles = makeStyles(theme => ({
 export const LatestCommunication: FunctionComponent<{ comm: ICommunication }> = (props) => {
     const classes = useStyles()
     const [currentComm, setCurrentComm] = useState<ICommunication>(props.comm)
+    const [updatedComm, setUpdatedComm] = useState<ICommunication>(props.comm)
     const [isEditOn, setIsEditOn] = useState<boolean | false>(false)
-
     const toggleEditClick = () => setIsEditOn(!isEditOn)
+
+    const getPublishedComm = () => {
+        const now = Date.now()
+        const history: ICommHistory = {
+            summary: updatedComm.summary,
+            tags: updatedComm.tags,
+            emails: updatedComm.emails,
+            phones: updatedComm.phones,
+            slack_channels: updatedComm.slack_channels,
+            created: { $date: now }
+
+        }
+        const publishHistory = [history, ...updatedComm.publish_history]
+        const publishedComm: ICommunication = Object.assign({}, updatedComm, {
+            updated: now,
+            publish_history: publishHistory
+        })
+        console.log({ publishedComm })
+        return publishedComm
+    }
+
+    const dispatch = useDispatch();
     const onSave = (draftComm: ICommunication) => {
         console.log(draftComm)
+        setUpdatedComm(draftComm)
         toggleEditClick()
     }
 
@@ -32,6 +57,14 @@ export const LatestCommunication: FunctionComponent<{ comm: ICommunication }> = 
             setCurrentComm(props.comm)
         }
     }, [isEditOn, props.comm])
+
+    useEffect(() => {
+        if (!isEditOn && updatedComm !== props.comm) {
+            const publishedComm = getPublishedComm()
+            // console.log("Communication is edited!", publishedComm)
+            dispatch(editCommunication(publishedComm))
+        }
+    }, [isEditOn])
 
     return <Grid container justify="center" className={classes.root}>
         {isEditOn &&
