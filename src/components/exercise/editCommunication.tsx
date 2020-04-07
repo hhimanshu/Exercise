@@ -73,20 +73,21 @@ export const EditCommunication = (props: { onClose: any, onSave: any, currentCom
     }, [draftComm])
 
     return (
-        <div>
-            <Dialog onClose={props.onClose} aria-labelledby="customized-dialog-title" open>
-                <DialogTitle id="customized-dialog-title" onClose={props.onClose}>
-                    Editing Communication
+        <Dialog onClose={props.onClose} aria-labelledby="edit-communication-title" open>
+            <DialogTitle id="edit-communication-title" onClose={props.onClose}>
+                Editing Communication
         </DialogTitle>
-                <DialogContent dividers>
-                    <TextField name="summary" label="Summary" defaultValue={draftComm.summary} onChange={onSummaryChange} />
-                    <MultipleSelect name="tags" selectedValues={draftComm.tags} allValues={props.currentComm.tags} onChange={handleMultiChange} />
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={props.onClose} color="primary">Cancel</Button>
-                    <Button autoFocus onClick={onSaveClick} color="primary">Save</Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+            <DialogContent dividers>
+                <TextField name="summary" label="Summary" defaultValue={draftComm.summary} onChange={onSummaryChange} />
+                <MultipleSelect name="tags" selectedValues={draftComm.tags} allValues={props.currentComm.tags} onChange={handleMultiChange} />
+                <MultipleSelect name="slack_channels" selectedValues={draftComm.slack_channels} allValues={props.currentComm.slack_channels} onChange={handleMultiChange} />
+                <MultipleSelect name="emails" selectedValues={draftComm.emails} allValues={props.currentComm.emails} onChange={handleMultiChange} />
+                <MultipleSelect name="phones" selectedValues={draftComm.phones} allValues={props.currentComm.phones} onChange={handleMultiChange} />
+            </DialogContent>
+            <DialogActions>
+                <Button autoFocus onClick={props.onClose} color="primary">Cancel</Button>
+                <Button autoFocus onClick={onSaveClick} color="primary">Save</Button>
+            </DialogActions>
+        </Dialog>
     );
 }
