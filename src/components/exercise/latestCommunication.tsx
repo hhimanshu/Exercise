@@ -1,7 +1,7 @@
 import { Chip, Grid, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
 import EditIcon from '@material-ui/icons/Edit';
 import { format } from "date-fns";
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import { ICommunication } from "../../types/communication";
 import { EditCommunication } from './editCommunication';
 import { DisplayEmails, DisplayPhones, DisplaySlackChannels, DisplayTags, Header } from './shared';
@@ -18,15 +18,22 @@ const useStyles = makeStyles(theme => ({
 
 export const LatestCommunication: FunctionComponent<{ comm: ICommunication }> = (props) => {
     const classes = useStyles()
-    //const [currentComm, setCurrentComm] = useState<ICommunication | {}>({})
+    const [currentComm, setCurrentComm] = useState<ICommunication | {}>({})
     const [isEditOn, setIsEditOn] = useState<boolean | false>(false)
 
     const toggleEditClick = () => setIsEditOn(!isEditOn)
+    const onSave = (draftComm: ICommunication) => console.log(draftComm)
+
+    useEffect(() => {
+        if (isEditOn) {
+            setCurrentComm(props.comm)
+        }
+    }, [isEditOn, props.comm])
 
     return <Grid container justify="center" className={classes.root}>
         {isEditOn &&
             <Grid item xs={10}>
-                <EditCommunication onClose={toggleEditClick} />
+                <EditCommunication currentComm={currentComm} onClose={toggleEditClick} onSave={onSave} />
             </Grid>
         }
         <Grid item xs={10}>
