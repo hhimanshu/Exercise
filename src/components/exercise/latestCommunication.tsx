@@ -1,9 +1,10 @@
-import React, { FunctionComponent } from 'react';
-import { ICommunication } from "../../types/communication"
-import { format } from "date-fns"
-import { Grid, makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip } from "@material-ui/core"
-import { DisplayTags, DisplayEmails, DisplayPhones, DisplaySlackChannels, Header } from './shared';
+import { Chip, Grid, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
 import EditIcon from '@material-ui/icons/Edit';
+import { format } from "date-fns";
+import React, { FunctionComponent, useState } from 'react';
+import { ICommunication } from "../../types/communication";
+import { EditCommunication } from './editCommunication';
+import { DisplayEmails, DisplayPhones, DisplaySlackChannels, DisplayTags, Header } from './shared';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -17,20 +18,28 @@ const useStyles = makeStyles(theme => ({
 
 export const LatestCommunication: FunctionComponent<{ comm: ICommunication }> = (props) => {
     const classes = useStyles()
+    //const [currentComm, setCurrentComm] = useState<ICommunication | {}>({})
+    const [isEditOn, setIsEditOn] = useState<boolean | false>(false)
+
+    const toggleEditClick = () => setIsEditOn(!isEditOn)
 
     return <Grid container justify="center" className={classes.root}>
+        {isEditOn &&
+            <Grid item xs={10}>
+                <EditCommunication onClose={toggleEditClick} />
+            </Grid>
+        }
         <Grid item xs={10}>
             <Header title="Latest Communication">
                 <Chip
                     label="Edit Communication"
                     clickable
                     color="primary"
-                    onClick={() => console.log("edit clicked")}
+                    onClick={toggleEditClick}
                     icon={<EditIcon fontSize="small" />}
                     variant="outlined"
                 />
             </Header>
-
         </Grid>
         <Grid item xs={10}>
             <TableContainer component={Paper}>
