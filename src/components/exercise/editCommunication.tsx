@@ -5,6 +5,7 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { ICommunication } from "../../types/communication";
+import MultipleSelect from './multiSelectChips';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -74,6 +75,7 @@ export const EditCommunication = (props: { onClose: any, onSave: any, currentCom
         </DialogTitle>
                 <DialogContent dividers>
                     <TextField name="summary" label="Summary" defaultValue={draftComm.summary} onChange={onSummaryChange} />
+                    <MultipleSelect/>
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={props.onClose} color="primary">Cancel</Button>
