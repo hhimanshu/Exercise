@@ -1,55 +1,24 @@
+import { Chip } from "@material-ui/core";
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import { Chip } from "@material-ui/core";
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import React from 'react';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-            maxWidth: 300,
-        },
-        chips: {
-            display: 'flex',
-            flexWrap: 'wrap',
-        },
-        chip: {
-            margin: 2,
-        },
-        noLabel: {
-            marginTop: theme.spacing(3),
-        },
-    }),
-);
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
+const useStyles = makeStyles((theme: Theme) => ({
+    formControl: {
+        marginTop: theme.spacing(2),
     },
-};
-
-// const names = [
-//     'Oliver Hansen',
-//     'Van Henry',
-//     'April Tucker',
-//     'Ralph Hubbard',
-//     'Omar Alexander',
-//     'Carlos Abbott',
-//     'Miriam Wagner',
-//     'Bradley Wilkerson',
-//     'Virginia Andrews',
-//     'Kelly Snyder',
-// ];
+    chips: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    chip: {
+        margin: 2,
+    },
+}));
 
 function getStyles(name: string, values: string[], theme: Theme) {
     return {
@@ -62,10 +31,6 @@ function getStyles(name: string, values: string[], theme: Theme) {
 
 export default function MultipleSelect(props: { name: string, selectedValues: string[], allValues: string[], onChange: any }) {
     const classes = useStyles();
-    //const [personName, setPersonName] = React.useState<string[]>(props.values);
-
-    // const onChange = () => setPersonName(props.values)
-    // const onChange = () => console.log("hello")
     const label = props.name.charAt(0).toUpperCase() + props.name.slice(1)
 
     const theme = useTheme();
@@ -86,7 +51,6 @@ export default function MultipleSelect(props: { name: string, selectedValues: st
                             ))}
                         </div>
                     )}
-                    MenuProps={MenuProps}
                 >
                     {props.allValues.map((name) => (
                         <MenuItem key={name} value={name} style={getStyles(name, props.selectedValues, theme)}>

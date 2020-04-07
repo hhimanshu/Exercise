@@ -73,7 +73,7 @@ export const EditCommunication = (props: { onClose: any, onSave: any, currentCom
     }, [draftComm])
 
     return (
-        <Dialog onClose={props.onClose} aria-labelledby="edit-communication-title" open>
+        <Dialog fullWidth disableBackdropClick maxWidth='xs' onClose={props.onClose} aria-labelledby="edit-communication-title" open>
             <DialogTitle id="edit-communication-title" onClose={props.onClose}>
                 Editing Communication
         </DialogTitle>
