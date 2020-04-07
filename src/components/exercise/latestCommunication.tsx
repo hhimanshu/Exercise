@@ -41,7 +41,6 @@ export const LatestCommunication: FunctionComponent<{ comm: ICommunication }> = 
             updated: now,
             publish_history: publishHistory
         })
-        console.log({ publishedComm })
         return publishedComm
     }
 
@@ -61,8 +60,8 @@ export const LatestCommunication: FunctionComponent<{ comm: ICommunication }> = 
     useEffect(() => {
         if (!isEditOn && updatedComm !== props.comm) {
             const publishedComm = getPublishedComm()
-            // console.log("Communication is edited!", publishedComm)
             dispatch(editCommunication(publishedComm))
+            setCurrentComm(publishedComm)
         }
     }, [isEditOn])
 
