@@ -21,11 +21,20 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 function getStyles(name: string, values: string[], theme: Theme) {
+    const isSelected = values.indexOf(name) > -1
     return {
         fontWeight:
-            values.indexOf(name) === -1
+            isSelected
                 ? theme.typography.fontWeightRegular
                 : theme.typography.fontWeightMedium,
+        backgroundColor:
+            isSelected
+                ? theme.palette.primary.main
+                : theme.palette.common.white,
+        color:
+            isSelected
+                ? theme.palette.primary.contrastText
+                : theme.palette.common.black
     };
 }
 
